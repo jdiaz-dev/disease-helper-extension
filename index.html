@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Open two new tabs and store their references
+      const tab1 = window.open("https://example1.com", "_blank");
+      const tab2 = window.open("https://example2.com", "_blank");
+
+      // Function to focus on tab1
+      function focusTab1() {
+        if (tab1) {
+          tab1.focus();
+          console.log("call 1");
+        } else {
+          console.log("Tab 1 is not available");
+        }
+      }
+
+      // Function to focus on tab2
+      function focusTab2() {
+        if (tab2) {
+          tab2.focus();
+          console.log("call 2");
+        } else {
+          console.log("Tab 2 is not available");
+        }
+      }
+
+      // Example of switching between tabs
+      setTimeout(focusTab1, 2000); // Focus tab1 after 2 seconds
+      setTimeout(focusTab2, 4000); // Focus tab2 after 4 seconds
+    </script>
+  </body>
+</html>
