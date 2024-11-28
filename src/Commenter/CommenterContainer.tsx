@@ -29,7 +29,7 @@ function CommenterContainer() {
             );
           }
 
-          const commentBoxes: any = document.querySelectorAll(
+          const commentBoxes = document.querySelectorAll<HTMLInputElement>(
             `#${secondClass}`
           );
           //contenteditable-textarea
