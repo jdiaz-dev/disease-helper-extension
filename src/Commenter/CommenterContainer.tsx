@@ -6,7 +6,9 @@ function CommenterContainer() {
     "yt-spec-touch-feedback-shape__fill"
   );
   const [secondClass, setSecondClass] = useState("contenteditable-root");
-  const [thirdClass, setThirdTag] = useState("");
+  const [thirdClass, setThirdTag] = useState(
+    "submit-button"
+  );
   const [message, setMessage] = useState("");
 
   const onclickHandler = () => {
@@ -14,10 +16,6 @@ function CommenterContainer() {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id as number },
         func: async (firstId, firstClass, secondClass, thirdClass, message) => {
-          console.log("--1", firstClass);
-          console.log("--2", secondClass);
-          console.log("--3", thirdClass);
-          console.log("--4", message);
           const idsArr: any = document.querySelectorAll(`#${firstId}`);
 
           for (let x = 0; x < idsArr.length; x++) {
@@ -62,8 +60,18 @@ function CommenterContainer() {
             // Trigger any input events if necessary
             box.dispatchEvent(new Event("input", { bubbles: true }));
           }
-          console.log("--commentBoxes 2", commentBoxes);
-        },
+
+          const idsArr2: any = document.querySelectorAll(`#${thirdClass}`); //get as target id custom button of google
+
+          for (let x = 0; x < idsArr2.length; x++) {
+            await new Promise((resolve) =>
+              setTimeout(() => {
+                idsArr2[x].click();
+                resolve(undefined);
+              }, 1000)
+            );
+          }
+        },  
         args: [firstId, firstClass, secondClass, thirdClass, message],
       });
     });
@@ -121,4 +129,7 @@ yt-formatted-string
 
 ytd-commentbox
 
+yt-spec-button-shape-next--filled
 */
+// const idsArr: any = document.querySelectorAll(`#submit-button`)
+// submit-button
