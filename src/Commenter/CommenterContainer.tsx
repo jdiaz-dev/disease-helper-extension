@@ -35,16 +35,34 @@ function CommenterContainer() {
           //contenteditable-textarea
           console.log("--commentBoxes 1", commentBoxes);
           for (let x = 0; x < commentBoxes.length; x++) {
-            await new Promise((resolve) => {
-              setTimeout(() => {
-                commentBoxes[x].textContent = message;
+            const box = commentBoxes[x];
 
-                resolve(undefined);
-              }, 1000);
-            });
+            // Focus on the comment box
+            box.focus();
+
+            // Simulate typing the message
+            for (let i = 0; i < message.length; i++) {
+              await new Promise(
+                (resolve) =>
+                  setTimeout(() => {
+                    const event = new KeyboardEvent("keydown", {
+                      key: message[i],
+                      // char: message[i],
+                      keyCode: message[i].charCodeAt(0),
+                      bubbles: true,
+                      cancelable: true,
+                    });
+                    box.dispatchEvent(event);
+                    box.textContent += message[i]; // Update the content manually
+                    resolve(undefined);
+                  }, 100) // Simulate typing speed
+              );
+            }
+
+            // Trigger any input events if necessary
+            box.dispatchEvent(new Event("input", { bubbles: true }));
           }
           console.log("--commentBoxes 2", commentBoxes);
-
         },
         args: [firstId, firstClass, secondClass, thirdClass, message],
       });
