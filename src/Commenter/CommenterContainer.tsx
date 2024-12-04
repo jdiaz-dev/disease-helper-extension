@@ -16,6 +16,34 @@ function CommenterContainer() {
   const [thirdClass, setThirdTag] = useState("submit-button");
   const [message, setMessage] = useState("i");
 
+  const scrollAllCommentsSection = async () => {
+    await new Promise((resolve) => {
+      if (!(window as any)._scrollInterval) {
+        // Start scrolling every 2 seconds
+        (window as any)._scrollInterval = setInterval(() => {
+          window.scrollTo({
+            top: window.scrollY + 1000, // Scroll down by 150 pixels
+            left: 0,
+            behavior: "smooth", // Smooth scrolling animation
+          });
+
+          console.log("----calling");
+          const scrollPosition = window.scrollY + window.innerHeight;
+          const documentHeight = Math.max(
+            document.body.offsetHeight,
+            document.documentElement.scrollHeight
+          );
+
+          if (scrollPosition >= documentHeight) {
+            console.log("Reached the bottom of the page.");
+            clearInterval((window as any)._scrollInterval);
+            delete (window as any)._scrollInterval;
+            resolve(undefined);
+          }
+        }, 3000);
+      }
+    });
+  };
   const activateRepplyButton = async (
     idForContainerRepplyButton: string,
     classForReppyButton: string
@@ -88,22 +116,8 @@ function CommenterContainer() {
       chrome.scripting.executeScript({
         target: { tabId: tabs[0].id as number },
         func: async (firstId, firstClass, secondClass, thirdClass, message) => {
-          if (!(window as any)._scrollInterval) {
-            // Start scrolling every 2 seconds
-            (window as any)._scrollInterval = setInterval(() => {
-              window.scrollTo({
-                top: window.scrollY + 1000, // Scroll down by 150 pixels
-                left: 0,
-                behavior: "smooth", // Smooth scrolling animation
-              });
-  
-              // Optional: Stop when reaching the bottom
-              /* if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                clearInterval((window as any)._scrollInterval);
-                delete (window as any)._scrollInterval;
-              } */
-            }, 3000);
-          }
+          await scrollAllCommentsSection();
+          console.log("------end scrolling");
           // await activateRepplyButton(firstId, firstClass)
           // await writeComment(secondClass, message)
           // await activateResponseComment(thirdClass)
