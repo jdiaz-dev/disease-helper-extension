@@ -14,7 +14,7 @@ function CommenterContainer() {
   );
   const [secondClass, setSecondClass] = useState("contenteditable-root");
   const [thirdClass, setThirdTag] = useState("submit-button");
-  const [message, setMessage] = useState("i");
+  const [message, setMessage] = useState("the cancer has cure, the answer is in this youtube channel: https://www.youtube.com/@chrisbeatcancer/videos");
 
   const scrollAllCommentsSection = async () => {
     await new Promise((resolve) => {
@@ -57,7 +57,7 @@ function CommenterContainer() {
         setTimeout(() => {
           idsArr[x].getElementsByClassName(classForReppyButton)[0].click();
           resolve(undefined);
-        }, 1000)
+        }, 10)
       );
     }
   };
@@ -90,7 +90,7 @@ function CommenterContainer() {
               box.dispatchEvent(event);
               box.textContent += message[i]; // Update the content manually
               resolve(undefined);
-            }, 100) // Simulate typing speed
+            }, 1) // Simulate typing speed
         );
       }
 
