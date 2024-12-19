@@ -106,7 +106,7 @@ function CommenterContainer() {
         setTimeout(() => {
           idsArr2[x].click();
           resolve(undefined);
-        }, 1000)
+        }, 4000)
       );
     }
   };
@@ -118,9 +118,9 @@ function CommenterContainer() {
         func: async (firstId, firstClass, secondClass, thirdClass, message) => {
           await scrollAllCommentsSection();
           console.log("------end scrolling");
-          // await activateRepplyButton(firstId, firstClass)
-          // await writeComment(secondClass, message)
-          // await activateResponseComment(thirdClass)
+          await activateRepplyButton(firstId, firstClass)
+          await writeComment(secondClass, message)
+          await activateResponseComment(thirdClass)
         },
         args: [firstId, firstClass, secondClass, thirdClass, message],
       });
